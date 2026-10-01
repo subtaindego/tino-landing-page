@@ -325,8 +325,69 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-top: 1.5rem;
 }
+
+/* Wrapper for bottom section (helpCard + user strip) */
+.sidebarBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* User account strip at very bottom */
+.userAccountStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 0.5rem 0;
+  border-top: 1px solid rgba(237, 238, 238, 0.07);
+  margin-top: 1rem;
+}
+
+.userAccountMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.userNameLabel {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmailSub {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userSignoutBtn {
+  flex-shrink: 0;
+  background: transparent;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  color: #f87171;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.userSignoutBtn:hover {
+  background: rgba(248, 113, 113, 0.12);
+  border-color: #f87171;
+}
+
 
 .helpLabel {
   font-size: 0.8rem;
@@ -497,7 +558,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  max-width: 820px;
+  flex: 1;
+  min-width: 0;
 }
 
 .moduleBreadcrumb {
@@ -509,11 +571,14 @@
 }
 
 .moduleTitle {
-  font-size: 2.15rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.75rem);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -0.025em;
   line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .moduleSubtitle {

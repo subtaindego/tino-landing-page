@@ -435,21 +435,16 @@ export default function DashboardPage() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      if (firstScriptTag && firstScriptTag.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-    }
-
     let playerInstance = null;
+    let retryTimer = null;
 
     const setupPlayer = () => {
       const iframeId = `yt-player-${activeTab}`;
       const el = document.getElementById(iframeId);
       if (!el || !window.YT || !window.YT.Player) return;
+
+      // Destroy old instance first to avoid duplicates
+      try { if (playerInstance) playerInstance.destroy(); } catch (e) {}
 
       try {
         playerInstance = new window.YT.Player(iframeId, {
@@ -470,18 +465,31 @@ export default function DashboardPage() {
       }
     };
 
-    if (window.YT && window.YT.Player) {
-      setupPlayer();
-    } else {
-      window.onYouTubeIframeAPIReady = setupPlayer;
-    }
+    const trySetup = () => {
+      if (window.YT && window.YT.Player) {
+        // Small delay to ensure iframe is in the DOM after tab switch
+        retryTimer = setTimeout(setupPlayer, 300);
+      } else {
+        // Load the API script once
+        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          document.head.appendChild(tag);
+        }
+        window.onYouTubeIframeAPIReady = setupPlayer;
+      }
+    };
+
+    trySetup();
 
     return () => {
+      clearTimeout(retryTimer);
       if (playerInstance && playerInstance.destroy) {
         try { playerInstance.destroy(); } catch (e) {}
       }
     };
-  }, [activeTab, completedTabs]);
+  }, [activeTab]); // Only re-run when tab changes, not completedTabs
+
 
   // Dynamic progress calculation: 5 core steps * 20% = 100%
   const completedCoreCount = isMounted
@@ -734,17 +742,6 @@ export default function DashboardPage() {
             <span className={styles.brandSub}>AUTHORITY KIT™</span>
           </Link>
 
-          {/* User Account Strip */}
-          <div className={styles.userAccountStrip}>
-            <div className={styles.userAccountMeta}>
-              <span className={styles.userNameLabel}>{currentUser.name || 'Member'}</span>
-              <span className={styles.userEmailSub}>{currentUser.email}</span>
-            </div>
-            <button onClick={handleLogout} className={styles.userSignoutBtn} title="Sign out">
-              Log out
-            </button>
-          </div>
-
           {/* 7 Menu Items: 1 Intro, 4 Video Breakdowns, 1 Blueprint Guide (Bonus), 1 Upgrade to 1:1 */}
           <nav className={styles.navStack} aria-label="Course Navigation">
             {TABS_CONFIG.map((tab) => {
@@ -778,7 +775,8 @@ export default function DashboardPage() {
           </nav>
         </div>
 
-        {/* Bottom Sidebar Need Help? Widget */}
+        {/* Bottom: Need Help + User Account */}
+        <div className={styles.sidebarBottom}>
         <div className={styles.sidebarHelpCard}>
           <div className={styles.helpLabel}>Need Help?</div>
           <a
@@ -829,6 +827,18 @@ export default function DashboardPage() {
                 <polyline points="22,6 12,13 2,6"></polyline>
               </svg>
             </a>
+          </div>
+        </div>
+
+          {/* User Account Strip — bottom left */}
+          <div className={styles.userAccountStrip}>
+            <div className={styles.userAccountMeta}>
+              <span className={styles.userNameLabel}>{currentUser.name || 'Member'}</span>
+              <span className={styles.userEmailSub}>{currentUser.email}</span>
+            </div>
+            <button onClick={handleLogout} className={styles.userSignoutBtn} title="Sign out">
+              Log out
+            </button>
           </div>
         </div>
       </aside>
@@ -888,65 +898,6 @@ export default function DashboardPage() {
                   allowFullScreen
                 />
               </div>
-
-              {/* SINGLE UNIFIED MARKING ACTION BAR */}
-              <div className={styles.premiumActionBar}>
-                {/* Left Step Meta */}
-                <div className={styles.actionLeftMeta}>
-                  <div className={styles.actionStepBadge}>
-                    STEP {currentTab.stepIndex} OF {currentTab.totalSteps}
-                  </div>
-                  <div className={styles.actionStatusIndicator}>
-                    <span className={`${styles.statusDot} ${isCurrentDone ? styles.statusDotDone : ''}`} />
-                    <span className={styles.statusDescription}>
-                      {isCurrentDone ? (
-                        <strong>✓ Completed (+{currentTab.weight}% saved)</strong>
-                      ) : (
-                        <span>Mark as complete to add <strong>+{currentTab.weight}%</strong> to your progress</span>
-                      )}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Right Action */}
-                <div className={styles.actionBtnCluster}>
-                  {currentTab.prevTabId && (
-                    <button
-                      type="button"
-                      onClick={() => handleTabChange(currentTab.prevTabId)}
-                      className={styles.prevNavBtn}
-                    >
-                      ← Previous
-                    </button>
-                  )}
-
-                  {/* Single Unified Primary Button */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!isCurrentDone) {
-                        handleMarkComplete(currentTab.id, currentTab.nextTabId);
-                      } else if (currentTab.nextTabId) {
-                        handleTabChange(currentTab.nextTabId);
-                      }
-                    }}
-                    className={`${styles.markPrimaryBtn} ${isCurrentDone ? styles.markCompletedBtn : ''} ${currentTab.isFinalStep && !isCurrentDone ? styles.markFinalBtn : ''}`}
-                  >
-                    {isCurrentDone ? (
-                      <>
-                        <span className={styles.checkIcon}>✓</span>
-                        <span>
-                          {currentTab.isFinalStep ? "Completed • View Blueprints →" : "Completed • Next Lesson →"}
-                        </span>
-                      </>
-                    ) : currentTab.isFinalStep ? (
-                      <>Complete 100% & Finish 🎉</>
-                    ) : (
-                      <>Mark as Complete (+{currentTab.weight}%) & Next →</>
-                    )}
-                  </button>
-                </div>
-              </div>
             </div>
           )}
 
@@ -997,36 +948,6 @@ export default function DashboardPage() {
                 ))}
               </div>
 
-              {/* Bottom Action Bar for Blueprints */}
-              <div className={styles.premiumActionBar} style={{ marginTop: '2.5rem' }}>
-                <div className={styles.actionLeftMeta}>
-                  <div className={styles.actionStepBadge}>BONUS RESOURCE</div>
-                  <div className={styles.actionStatusIndicator}>
-                    <span className={styles.statusDotDone} />
-                    <span className={styles.statusDescription}>
-                      All 4 lessons completed (100%). You have unlocked the bonus library.
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.actionBtnCluster}>
-                  <button
-                    type="button"
-                    onClick={() => handleTabChange("breakdown-4")}
-                    className={styles.prevNavBtn}
-                  >
-                    ← Back to Lesson 4
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleTabChange("upgrade")}
-                    className={styles.markPrimaryBtn}
-                  >
-                    Explore 1:1 Mentorship →
-                  </button>
-                </div>
-              </div>
             </div>
           )}
 
@@ -1068,36 +989,6 @@ export default function DashboardPage() {
                 ))}
               </div>
 
-              {/* Bottom Navigation */}
-              <div className={styles.premiumActionBar} style={{ marginTop: '2.5rem' }}>
-                <div className={styles.actionLeftMeta}>
-                  <div className={styles.actionStepBadge}>VIP CONCIERGE</div>
-                  <div className={styles.actionStatusIndicator}>
-                    <span className={styles.statusDotDone} />
-                    <span className={styles.statusDescription}>
-                      Direct VIP line to Tino for 1:1 strategy and bespoke design.
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.actionBtnCluster}>
-                  <button
-                    type="button"
-                    onClick={() => handleTabChange("blueprint")}
-                    className={styles.prevNavBtn}
-                  >
-                    ← Back to Blueprints
-                  </button>
-                  <a
-                    href={clientConfig.profile.whatsapp || "https://wa.me/447700900123"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.markPrimaryBtn}
-                  >
-                    Chat with Tino on WhatsApp →
-                  </a>
-                </div>
-              </div>
             </div>
           )}
         </div>
