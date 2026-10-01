@@ -1,3 +1,4 @@
+/* ── Lock Screen ── */
 .adminLockWrapper {
   min-height: 100vh;
   display: flex;
@@ -7,7 +8,6 @@
   position: relative;
   overflow: hidden;
   padding: 1.5rem;
-  font-family: inherit;
 }
 
 .ambientGlow {
@@ -27,7 +27,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   border-radius: 16px;
   padding: 2.5rem;
-  max-width: 440px;
+  max-width: 400px;
   width: 100%;
   text-align: center;
   position: relative;
@@ -43,13 +43,12 @@
   font-size: 1.6rem;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .lockSubtitle {
   font-size: 0.9rem;
   color: #9ca3af;
-  line-height: 1.5;
   margin-bottom: 1.8rem;
 }
 
@@ -97,20 +96,6 @@
 .errorText {
   color: #f87171;
   font-size: 0.85rem;
-  margin: -0.25rem 0;
-}
-
-.quickHint {
-  font-size: 0.8rem;
-  color: #6b7280;
-  margin-top: 1.2rem;
-}
-
-.quickHint code {
-  color: #51f8aa;
-  background: rgba(81, 248, 170, 0.1);
-  padding: 2px 6px;
-  border-radius: 4px;
 }
 
 .backLink {
@@ -125,7 +110,7 @@
   color: #ffffff;
 }
 
-/* ================= Authenticated Admin UI ================= */
+/* ── Authenticated Admin UI ── */
 .adminMain {
   min-height: 100vh;
   background-color: #0b0d19;
@@ -133,80 +118,39 @@
   padding-bottom: 4rem;
 }
 
-.adminNav {
+.topBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2.5rem;
-  background: #111424;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.navLeft {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.logoBadge {
-  background: #51f8aa;
-  color: #0b0d19;
-  font-weight: 800;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
-}
-
-.portalTitle {
-  font-weight: 600;
+.topBarTitle {
+  font-weight: 700;
   color: #ffffff;
-  font-size: 1.05rem;
-}
-
-.navRight {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.previewBtn {
-  background: rgba(81, 248, 170, 0.1);
-  color: #51f8aa;
-  border: 1px solid rgba(81, 248, 170, 0.3);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.previewBtn:hover {
-  background: rgba(81, 248, 170, 0.2);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
 }
 
 .logoutBtn {
   background: transparent;
   color: #9ca3af;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .logoutBtn:hover {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .contentWrap {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1.5rem;
   display: flex;
@@ -214,56 +158,51 @@
   gap: 2rem;
 }
 
-/* Metric Cards */
+/* Stats */
 .metricGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
 }
 
 .metricCard {
   background: #111424;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.5rem 1.75rem;
 }
 
 .metricLabel {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: #9ca3af;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .metricValue {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #ffffff;
-  margin: 0.5rem 0 0.25rem;
-}
-
-.metricSub {
-  font-size: 0.8rem;
-  color: #6b7280;
+  color: #51f8aa;
 }
 
 .alertBanner {
   background: rgba(81, 248, 170, 0.1);
   border: 1px solid #51f8aa;
   color: #51f8aa;
-  padding: 0.85rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
 }
 
 /* Section Card */
 .cardSection {
   background: #111424;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  padding: 1.8rem;
+  padding: 1.75rem;
 }
 
 .sectionHeader {
@@ -271,28 +210,30 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1.5rem;
+  gap: 1rem;
 }
 
 .sectionTitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.2rem 0;
 }
 
 .sectionDesc {
-  font-size: 0.85rem;
-  color: #9ca3af;
+  font-size: 0.82rem;
+  color: #6b7280;
   margin: 0;
 }
 
 .refreshBtn {
+  flex-shrink: 0;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #edeeee;
-  padding: 0.45rem 0.9rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -301,46 +242,7 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Add Form */
-.addForm {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.formInput {
-  flex: 1;
-  min-width: 220px;
-  background: #0b0d19;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  color: #ffffff;
-  font-size: 0.9rem;
-  outline: none;
-}
-
-.formInput:focus {
-  border-color: #51f8aa;
-}
-
-.primaryActionBtn {
-  background: #51f8aa;
-  color: #0b0d19;
-  font-weight: 700;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.primaryActionBtn:hover {
-  background: #3de698;
-}
-
-/* Data Table */
+/* Table */
 .tableResponsive {
   overflow-x: auto;
 }
@@ -349,33 +251,42 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.88rem;
+  font-size: 0.87rem;
 }
 
 .dataTable th {
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.03);
   color: #9ca3af;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .dataTable td {
-  padding: 0.9rem 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   color: #d1d5db;
+}
+
+.dataTable tr:last-child td {
+  border-bottom: none;
 }
 
 .emailCell {
   color: #51f8aa !important;
   font-family: monospace;
+  font-size: 0.85rem;
 }
 
 .itemTag {
   background: rgba(255, 255, 255, 0.05);
   padding: 3px 8px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  color: #b0b7c3;
 }
 
 .priceCell {
@@ -384,32 +295,23 @@
 }
 
 .dateCell {
-  color: #9ca3af;
+  color: #6b7280;
   font-size: 0.8rem;
 }
 
-.paidBadge {
-  background: rgba(81, 248, 170, 0.15);
-  color: #51f8aa;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
 .statusActive {
-  background: rgba(56, 189, 248, 0.15);
+  background: rgba(56, 189, 248, 0.12);
   color: #38bdf8;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
 }
 
 .statusPending {
-  background: rgba(251, 191, 36, 0.15);
+  background: rgba(251, 191, 36, 0.12);
   color: #fbbf24;
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -419,20 +321,32 @@
   background: transparent;
   color: #f87171;
   border: 1px solid rgba(248, 113, 113, 0.3);
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 5px;
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .deleteBtn:hover {
-  background: rgba(248, 113, 113, 0.15);
+  background: rgba(248, 113, 113, 0.12);
 }
 
 .emptyNote {
   color: #6b7280;
   font-size: 0.9rem;
-  padding: 2rem 0;
+  padding: 2.5rem 0;
   text-align: center;
+}
+
+@media (max-width: 640px) {
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+  .topBar {
+    padding: 0.85rem 1rem;
+  }
+  .contentWrap {
+    padding: 0 1rem;
+  }
 }
