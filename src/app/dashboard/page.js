@@ -219,6 +219,11 @@ export default function DashboardPage() {
 
   const confettiCanvasRef = useRef(null);
 
+  // Refs to avoid stale closures in YouTube IFrame API callback
+  const activeTabRef = useRef(activeTab);
+  const handleMarkCompleteRef = useRef(null);
+  activeTabRef.current = activeTab;
+
   // Load saved user & progress from localStorage on mount
   useEffect(() => {
     setIsMounted(true);
@@ -431,6 +436,9 @@ export default function DashboardPage() {
     };
   }, [showCelebration]);
 
+  // Keep handleMarkComplete ref always up to date (avoids stale closure in YT callback)
+  handleMarkCompleteRef.current = handleMarkComplete;
+
   // Listen for YouTube video completion via IFrame API
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -439,7 +447,7 @@ export default function DashboardPage() {
     let retryTimer = null;
 
     const setupPlayer = () => {
-      const iframeId = `yt-player-${activeTab}`;
+      const iframeId = `yt-player-${activeTabRef.current}`;
       const el = document.getElementById(iframeId);
       if (!el || !window.YT || !window.YT.Player) return;
 
@@ -450,11 +458,12 @@ export default function DashboardPage() {
         playerInstance = new window.YT.Player(iframeId, {
           events: {
             onStateChange: (event) => {
-              // 0 = YT.PlayerState.ENDED
+              // 0 = YT.PlayerState.ENDED — use refs to avoid stale closure
               if (event.data === 0) {
-                const current = TABS_CONFIG.find((t) => t.id === activeTab);
-                if (current && !completedTabs.includes(current.id)) {
-                  handleMarkComplete(current.id, current.nextTabId);
+                const tabId = activeTabRef.current;
+                const current = TABS_CONFIG.find((t) => t.id === tabId);
+                if (current && handleMarkCompleteRef.current) {
+                  handleMarkCompleteRef.current(current.id, current.nextTabId);
                 }
               }
             }
@@ -488,7 +497,7 @@ export default function DashboardPage() {
         try { playerInstance.destroy(); } catch (e) {}
       }
     };
-  }, [activeTab]); // Only re-run when tab changes, not completedTabs
+  }, [activeTab]); // Re-attach player on every tab change
 
 
   // Dynamic progress calculation: 5 core steps * 20% = 100%
