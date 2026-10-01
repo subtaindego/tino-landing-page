@@ -27,8 +27,7 @@ export default function Header() {
     { label: "Authority Kit", href: "/authority-kit", badge: null },
     { label: "Free Training", href: "/swipemytraining", badge: "Free" },
     { label: "Checkout", href: "/checkout", badge: "$47" },
-    { label: "Member Portal", href: "/dashboard", badge: "Portal" },
-    { label: "Admin", href: "/admin", badge: "🛡️" },
+    { label: "Dashboard", href: "/dashboard", badge: null },
     { label: "Links", href: "/links", badge: null },
   ];
 
