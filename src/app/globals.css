@@ -54,6 +54,7 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   position: relative;
+  padding-top: 50px; /* Space below floating nav on all pages */
 }
 
 /* Subtle background lighting effect */
