@@ -1,0 +1,438 @@
+.adminLockWrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0b0d19;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem;
+  font-family: inherit;
+}
+
+.ambientGlow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(81, 248, 170, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.lockBox {
+  background: #111424;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.lockIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.lockTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.lockSubtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin-bottom: 1.8rem;
+}
+
+.lockForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lockInput {
+  width: 100%;
+  background: #0b0d19;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+  letter-spacing: 2px;
+  transition: border-color 0.2s;
+}
+
+.lockInput:focus {
+  border-color: #51f8aa;
+}
+
+.lockBtn {
+  background: #51f8aa;
+  color: #0b0d19;
+  font-weight: 700;
+  border: none;
+  padding: 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: transform 0.15s, background-color 0.2s;
+}
+
+.lockBtn:hover {
+  background: #3de698;
+  transform: translateY(-1px);
+}
+
+.errorText {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin: -0.25rem 0;
+}
+
+.quickHint {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 1.2rem;
+}
+
+.quickHint code {
+  color: #51f8aa;
+  background: rgba(81, 248, 170, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.backLink {
+  display: inline-block;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  margin-top: 1.2rem;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}
+
+/* ================= Authenticated Admin UI ================= */
+.adminMain {
+  min-height: 100vh;
+  background-color: #0b0d19;
+  color: #edeeee;
+  padding-bottom: 4rem;
+}
+
+.adminNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background: #111424;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logoBadge {
+  background: #51f8aa;
+  color: #0b0d19;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.portalTitle {
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1.05rem;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.previewBtn {
+  background: rgba(81, 248, 170, 0.1);
+  color: #51f8aa;
+  border: 1px solid rgba(81, 248, 170, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.previewBtn:hover {
+  background: rgba(81, 248, 170, 0.2);
+}
+
+.logoutBtn {
+  background: transparent;
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.contentWrap {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Metric Cards */
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.metricCard {
+  background: #111424;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.metricLabel {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.metricValue {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.metricSub {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.alertBanner {
+  background: rgba(81, 248, 170, 0.1);
+  border: 1px solid #51f8aa;
+  color: #51f8aa;
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Section Card */
+.cardSection {
+  background: #111424;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.8rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
+.sectionDesc {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.refreshBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #edeeee;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refreshBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Add Form */
+.addForm {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.formInput {
+  flex: 1;
+  min-width: 220px;
+  background: #0b0d19;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.formInput:focus {
+  border-color: #51f8aa;
+}
+
+.primaryActionBtn {
+  background: #51f8aa;
+  color: #0b0d19;
+  font-weight: 700;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.primaryActionBtn:hover {
+  background: #3de698;
+}
+
+/* Data Table */
+.tableResponsive {
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.dataTable th {
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: #9ca3af;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dataTable td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #d1d5db;
+}
+
+.emailCell {
+  color: #51f8aa !important;
+  font-family: monospace;
+}
+
+.itemTag {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.priceCell {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.dateCell {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.paidBadge {
+  background: rgba(81, 248, 170, 0.15);
+  color: #51f8aa;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.statusActive {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.statusPending {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.deleteBtn {
+  background: transparent;
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  background: rgba(248, 113, 113, 0.15);
+}
+
+.emptyNote {
+  color: #6b7280;
+  font-size: 0.9rem;
+  padding: 2rem 0;
+  text-align: center;
+}

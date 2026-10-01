@@ -1023,3 +1023,239 @@
     justify-content: center;
   }
 }
+
+/* ================= MEMBER LOGIN & SET-PASSWORD SCREENS ================= */
+.loginWrapper {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #0b0d19;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.loginCard {
+  background: #101322;
+  border: 1px solid rgba(81, 248, 170, 0.25);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(81, 248, 170, 0.1);
+  border-radius: 20px;
+  max-width: 460px;
+  width: 100%;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.loginBrandBadge {
+  display: inline-block;
+  background: rgba(81, 248, 170, 0.12);
+  border: 1px solid rgba(81, 248, 170, 0.3);
+  color: #51f8aa;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.loginTitle {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.loginSubtitle {
+  font-size: 0.88rem;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin: 0 0 1.6rem;
+}
+
+.authTabs {
+  display: flex;
+  background: #080a13;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 1.6rem;
+  gap: 4px;
+}
+
+.authTabBtn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  padding: 0.65rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.authTabBtnActive {
+  background: #1a1e33;
+  color: #51f8aa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+}
+
+.authInputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.authLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.authInput {
+  background: #080a13;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  color: #ffffff;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.authInput:focus {
+  border-color: #51f8aa;
+}
+
+.authSubmitBtn {
+  background: linear-gradient(90deg, #51f8aa 0%, #3de698 100%);
+  color: #0b1611;
+  font-weight: 800;
+  border: none;
+  height: 48px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  box-shadow: 0 4px 18px rgba(81, 248, 170, 0.25);
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.authSubmitBtn:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.authSubmitBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.authError {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.authSuccess {
+  background: rgba(81, 248, 170, 0.12);
+  border: 1px solid rgba(81, 248, 170, 0.35);
+  color: #51f8aa;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.authNoticeBox {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  color: #64748b;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.authNoticeBox strong {
+  color: #cbd5e1;
+}
+
+.authBuyLink {
+  color: #51f8aa;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* User Account Strip in Authenticated Sidebar */
+.userAccountStrip {
+  margin: 1.5rem 0 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userAccountMeta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.userNameLabel {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.userEmailSub {
+  font-size: 0.72rem;
+  color: #51f8aa;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.userSignoutBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #9ca3af;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.userSignoutBtn:hover {
+  color: #ffffff;
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}

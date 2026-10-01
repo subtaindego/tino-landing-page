@@ -201,6 +201,17 @@ const CORE_STEPS = ["intro", "breakdown-1", "breakdown-2", "breakdown-3", "break
 const STEP_WEIGHT = 20;
 
 export default function DashboardPage() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authTab, setAuthTab] = useState('login'); // 'login' | 'set-password'
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [setPasswordEmail, setSetPasswordEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [authSuccess, setAuthSuccess] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
+
   const [activeTab, setActiveTab] = useState("intro");
   const [completedTabs, setCompletedTabs] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -208,10 +219,31 @@ export default function DashboardPage() {
 
   const confettiCanvasRef = useRef(null);
 
-  // Load saved progress from localStorage on mount
+  // Load saved user & progress from localStorage on mount
   useEffect(() => {
     setIsMounted(true);
     try {
+      // 1. Check saved logged-in user
+      const savedUser = localStorage.getItem('tino_member_user');
+      if (savedUser) {
+        setCurrentUser(JSON.parse(savedUser));
+      }
+
+      // 2. Check URL parameters for direct set-password link from checkout/email
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const emailParam = params.get('email') || params.get('set_password_email');
+        const actionParam = params.get('action');
+
+        if (emailParam) {
+          setSetPasswordEmail(emailParam);
+          setLoginEmail(emailParam);
+          if (actionParam === 'set_password') {
+            setAuthTab('set-password');
+          }
+        }
+      }
+
       const saved = localStorage.getItem('tino_dashboard_completed_tabs_v4');
       if (saved) {
         setCompletedTabs(JSON.parse(saved));
@@ -220,6 +252,85 @@ export default function DashboardPage() {
       // Ignore private browsing storage errors
     }
   }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setAuthError('');
+    setAuthSuccess('');
+    setAuthLoading(true);
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setCurrentUser(data.user);
+        try {
+          localStorage.setItem('tino_member_user', JSON.stringify(data.user));
+        } catch (e) {}
+      } else {
+        if (data.needPasswordSetup) {
+          setAuthTab('set-password');
+          setSetPasswordEmail(loginEmail);
+        }
+        setAuthError(data.error || 'Login failed. Please check your credentials.');
+      }
+    } catch (err) {
+      setAuthError('Connection error. Please try again.');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleSetPassword = async (e) => {
+    e.preventDefault();
+    setAuthError('');
+    setAuthSuccess('');
+
+    if (newPassword.length < 6) {
+      setAuthError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setAuthError('Passwords do not match. Please re-type.');
+      return;
+    }
+
+    setAuthLoading(true);
+    try {
+      const res = await fetch('/api/auth/set-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: setPasswordEmail, password: newPassword })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setAuthSuccess(data.message);
+        setCurrentUser(data.user);
+        try {
+          localStorage.setItem('tino_member_user', JSON.stringify(data.user));
+        } catch (e) {}
+      } else {
+        setAuthError(data.error || 'Failed to set password.');
+      }
+    } catch (err) {
+      setAuthError('Network error setting password.');
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    try {
+      localStorage.removeItem('tino_member_user');
+    } catch (e) {}
+  };
 
   // Switch tab manually
   const handleTabChange = (tabId) => {
@@ -387,6 +498,176 @@ export default function DashboardPage() {
   const linkedInShareUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(linkedInShareText)}`;
   const feedbackWhatsAppUrl = `https://wa.me/447700900123?text=${encodeURIComponent("Hey Tino! I just completed the LinkedIn Authority Kit™ with 100% progress 🎉. Here is my profile link for your review. Would love your quick feedback on my new positioning!")}`;
 
+  // Prevent hydration mismatch between SSR and client localStorage
+  if (!isMounted) {
+    return (
+      <div className={styles.loginWrapper} suppressHydrationWarning>
+        <div className={styles.ambientGlow} />
+        <div className={styles.loginCard} suppressHydrationWarning>
+          <div className={styles.loginBrandBadge}>TINO • AUTHORITY KIT™</div>
+          <h1 className={styles.loginTitle}>Member Portal</h1>
+          <p className={styles.loginSubtitle}>
+            Access your 4 video breakdown lessons, Canva templates, and brand blueprints.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // If not logged in, render Member Login / Set Password screen
+  if (!currentUser) {
+    return (
+      <div className={styles.loginWrapper} suppressHydrationWarning>
+        <div className={styles.ambientGlow} />
+
+        <div className={styles.loginCard} suppressHydrationWarning>
+          <div className={styles.loginBrandBadge}>TINO • AUTHORITY KIT™</div>
+          <h1 className={styles.loginTitle}>Member Portal</h1>
+          <p className={styles.loginSubtitle}>
+            Access your 4 video breakdown lessons, Canva templates, and brand blueprints.
+          </p>
+
+          {/* Toggle between Login and Set Password */}
+          <div className={styles.authTabs} suppressHydrationWarning>
+            <button
+              type="button"
+              className={`${styles.authTabBtn} ${authTab === 'login' ? styles.authTabBtnActive : ''}`}
+              onClick={() => {
+                setAuthTab('login');
+                setAuthError('');
+                setAuthSuccess('');
+              }}
+              suppressHydrationWarning
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={`${styles.authTabBtn} ${authTab === 'set-password' ? styles.authTabBtnActive : ''}`}
+              onClick={() => {
+                setAuthTab('set-password');
+                setAuthError('');
+                setAuthSuccess('');
+              }}
+              suppressHydrationWarning
+            >
+              Set Password
+            </button>
+          </div>
+
+          {authError && <div className={styles.authError}>{authError}</div>}
+          {authSuccess && <div className={styles.authSuccess}>{authSuccess}</div>}
+
+          {/* VIEW A: Member Login Form */}
+          {authTab === 'login' && (
+            <form onSubmit={handleLogin} className={styles.authForm} suppressHydrationWarning>
+              <div className={styles.authInputGroup}>
+                <label className={styles.authLabel}>Authorized Email Address</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="name@example.com"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className={styles.authInput}
+                  autoComplete="email"
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div className={styles.authInputGroup}>
+                <label className={styles.authLabel}>Password</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className={styles.authInput}
+                  autoComplete="current-password"
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={authLoading} 
+                className={styles.authSubmitBtn}
+                suppressHydrationWarning
+              >
+                {authLoading ? 'Verifying access...' : 'Sign In to Dashboard →'}
+              </button>
+            </form>
+          )}
+
+          {/* VIEW B: Set Password Form */}
+          {authTab === 'set-password' && (
+            <form onSubmit={handleSetPassword} className={styles.authForm} suppressHydrationWarning>
+              <div className={styles.authInputGroup}>
+                <label className={styles.authLabel}>Your Checkout Email</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="name@example.com"
+                  value={setPasswordEmail}
+                  onChange={(e) => setSetPasswordEmail(e.target.value)}
+                  className={styles.authInput}
+                  autoComplete="email"
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div className={styles.authInputGroup}>
+                <label className={styles.authLabel}>Create Password (min. 6 characters)</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Create secure password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className={styles.authInput}
+                  autoComplete="new-password"
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <div className={styles.authInputGroup}>
+                <label className={styles.authLabel}>Confirm Password</label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className={styles.authInput}
+                  autoComplete="new-password"
+                  suppressHydrationWarning
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                disabled={authLoading} 
+                className={styles.authSubmitBtn}
+                suppressHydrationWarning
+              >
+                {authLoading ? 'Saving password...' : 'Set Password & Enter Dashboard →'}
+              </button>
+            </form>
+          )}
+
+          <div className={styles.authNoticeBox}>
+            🔒 <strong>Protected Area:</strong> Only emails registered in the database can log in.<br />
+            Haven&apos;t purchased yet?{' '}
+            <Link href="/checkout" className={styles.authBuyLink}>
+              Order Authority Kit ($47) →
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.dashboardShell}>
       <div className={styles.ambientGlow} />
@@ -411,7 +692,7 @@ export default function DashboardPage() {
             <div className={styles.celebrationEmoji}>🎉</div>
             <h2 className={styles.celebrationMainTitle}>100% Completed!</h2>
             <p className={styles.celebrationSubTitle}>
-              Congratulations! You've mastered all lessons in the LinkedIn Authority Kit™.
+              Congratulations! You&apos;ve mastered all lessons in the LinkedIn Authority Kit™.
             </p>
 
             {/* EXACTLY 2 BUTTONS & NOTHING ELSE */}
@@ -452,6 +733,17 @@ export default function DashboardPage() {
             <span className={styles.brandMain}>LinkedIn</span>
             <span className={styles.brandSub}>AUTHORITY KIT™</span>
           </Link>
+
+          {/* User Account Strip */}
+          <div className={styles.userAccountStrip}>
+            <div className={styles.userAccountMeta}>
+              <span className={styles.userNameLabel}>{currentUser.name || 'Member'}</span>
+              <span className={styles.userEmailSub}>{currentUser.email}</span>
+            </div>
+            <button onClick={handleLogout} className={styles.userSignoutBtn} title="Sign out">
+              Log out
+            </button>
+          </div>
 
           {/* 7 Menu Items: 1 Intro, 4 Video Breakdowns, 1 Blueprint Guide (Bonus), 1 Upgrade to 1:1 */}
           <nav className={styles.navStack} aria-label="Course Navigation">

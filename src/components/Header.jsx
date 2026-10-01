@@ -1,107 +1,127 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { clientConfig } from '../config/client.config';
 import styles from './Header.module.css';
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { product, theme } = clientConfig;
-  const price = product.isLaunchActive ? product.launchPrice : product.regularPrice;
 
-  const navLinks = [
-    { name: "Authority Kit", href: "/" },
-    { name: "Free Training", href: "/swipemytraining" },
-    { name: "Checkout", href: "/checkout" },
-    { name: "Links Hub", href: "/links" },
-    { name: "Member Portal", href: "/dashboard" },
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  const navItems = [
+    { label: "Authority Kit", href: "/authority-kit", badge: null },
+    { label: "Free Training", href: "/swipemytraining", badge: "Free" },
+    { label: "Checkout", href: "/checkout", badge: "$47" },
+    { label: "Member Portal", href: "/dashboard", badge: "Portal" },
+    { label: "Admin", href: "/admin", badge: "🛡️" },
+    { label: "Links", href: "/links", badge: null },
   ];
 
   return (
-    <header className={styles.header}>
-      <div className={`container ${styles.headerInner}`}>
-        {/* Brand Brand Logo & Tag */}
-        <Link href="/" className={styles.brand}>
-          <div className={styles.avatarGlow}>
-            <img 
-              src={clientConfig.profile.avatarUrl} 
-              alt={theme.clientName} 
-              className={styles.avatarImg}
-            />
-          </div>
-          <div className={styles.brandText}>
-            <span className={styles.brandTitle}>Authority™</span>
-            <span className={styles.brandSub}>Kit</span>
-          </div>
+    <div className={styles.navWrapper} suppressHydrationWarning>
+      {/* Centered Floating Pill Navigation Dock */}
+      <nav 
+        className={`${styles.floatingPill} ${scrolled ? styles.floatingPillScrolled : ''}`} 
+        aria-label="Main Navigation"
+        suppressHydrationWarning
+      >
+        {/* Brand Mini Logo on Left of Pill */}
+        <Link href="/" className={styles.pillBrand} title="LinkedIn Authority Kit™">
+          <div className={styles.brandDot} />
+          <span className={styles.brandTitle}>TINO</span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className={styles.desktopNav}>
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+        {/* Divider */}
+        <div className={styles.pillDivider} />
+
+        {/* Desktop Links Center Stack */}
+        <div className={styles.linksRow}>
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
             return (
-              <Link 
-                key={link.href} 
-                href={link.href}
-                className={`${styles.navLink} ${isActive ? styles.activeNavLink : ''}`}
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
               >
-                {link.name}
+                <span>{item.label}</span>
+                {item.badge && (
+                  <span className={`${styles.badge} ${item.badge === '$47' ? styles.badgePrice : ''}`}>
+                    {item.badge}
+                  </span>
+                )}
+                {isActive && <span className={styles.activeGlowLine} />}
               </Link>
             );
           })}
-        </nav>
-
-        {/* Right CTA */}
-        <div className={styles.headerAction}>
-          <Link href="/checkout" className={`btn-primary ${styles.ctaBtn}`}>
-            <span>Get Kit — ${price}</span>
-            <span className={styles.badgeSale}>75% OFF</span>
-          </Link>
-
-          {/* Mobile Menu Button */}
-          <button 
-            type="button" 
-            className={styles.hamburger} 
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle navigation menu"
-          >
-            <span className={`${styles.bar} ${menuOpen ? styles.openTop : ''}`} />
-            <span className={`${styles.bar} ${menuOpen ? styles.openMid : ''}`} />
-            <span className={`${styles.bar} ${menuOpen ? styles.openBot : ''}`} />
-          </button>
         </div>
-      </div>
 
-      {/* Mobile Nav Dropdown */}
-      {menuOpen && (
-        <div className={styles.mobileMenu}>
-          <div className="container">
-            <div className={styles.mobileLinks}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`${styles.mobileNavLink} ${pathname === link.href ? styles.activeMobileNavLink : ''}`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <Link 
-                href="/checkout" 
-                onClick={() => setMenuOpen(false)}
-                className="btn-primary" 
-                style={{ width: '100%', marginTop: '0.75rem' }}
+        {/* Mobile Hamburger Toggle */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className={styles.mobileToggle}
+          aria-label="Toggle navigation menu"
+        >
+          <span className={`${styles.hamBar} ${mobileOpen ? styles.hamBarTop : ''}`} />
+          <span className={`${styles.hamBar} ${mobileOpen ? styles.hamBarMid : ''}`} />
+          <span className={`${styles.hamBar} ${mobileOpen ? styles.hamBarBot : ''}`} />
+        </button>
+      </nav>
+
+      {/* Mobile Blur Dropdown Menu */}
+      {mobileOpen && (
+        <div className={styles.mobileOverlay} onClick={() => setMobileOpen(false)}>
+          <div className={styles.mobileDropdownCard} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.mobileCardHeader}>
+              <span className={styles.mobileCardTitle}>Quick Navigation</span>
+              <button 
+                type="button" 
+                onClick={() => setMobileOpen(false)} 
+                className={styles.mobileCloseBtn}
               >
-                Get {clientConfig.product.name} — ${price}
-              </Link>
+                ✕
+              </button>
+            </div>
+
+            <div className={styles.mobileLinksStack}>
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`${styles.mobileItem} ${isActive ? styles.mobileItemActive : ''}`}
+                  >
+                    <span className={styles.mobileItemLabel}>{item.label}</span>
+                    {item.badge && (
+                      <span className={`${styles.badge} ${item.badge === '$47' ? styles.badgePrice : ''}`}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
       )}
-    </header>
+    </div>
   );
 }

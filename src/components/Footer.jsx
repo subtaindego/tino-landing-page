@@ -26,7 +26,7 @@ export default function Footer({ checkoutMode = false }) {
                 Get instant access to program →
               </Link>
               <a 
-                href={profile?.calBookingUrl || "https://cal.com/authoritykit/discovery-call"} 
+                href="https://www.linkedin.com/in/tinodiwanashenguruve?skipRedirect=true&contentTrackingId=uFbGEK%2FnRaCoXCXBxf7z6Q%3D%3D&viewName=premium-nav-upsell-text&upsellOrderOrigin=Tracking%3Av1%3Apremium_page_nav_upsell_text%3ACompany%20Pages%20SKU%3AIn-Product" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className={styles.ctaSecondaryBtn}

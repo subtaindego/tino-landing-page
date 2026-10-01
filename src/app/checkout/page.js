@@ -29,6 +29,7 @@ export default function CheckoutPage() {
   const [cardCvc, setCardCvc] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [setPasswordUrl, setSetPasswordUrl] = useState('/dashboard');
 
   // Calculate Total
   const totalPrice = addMasterclass ? basePrice + bumpPrice : basePrice;
@@ -59,17 +60,39 @@ export default function CheckoutPage() {
     setCardCvc('123');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
       alert("Please enter your email address.");
       return;
     }
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name || 'Customer',
+          email,
+          country,
+          addMasterclass,
+          paymentMethod
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSetPasswordUrl(data.setPasswordLink || `/dashboard?action=set_password&email=${encodeURIComponent(email)}`);
+        setIsSuccess(true);
+      } else {
+        alert(data.error || 'Failed to place order. Please try again.');
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setSetPasswordUrl(`/dashboard?action=set_password&email=${encodeURIComponent(email)}`);
       setIsSuccess(true);
-    }, 1400);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -435,21 +458,39 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      {/* Success Modal Simulation */}
+      {/* Success Modal */}
       {isSuccess && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalBox}>
             <div className={styles.modalCheck}>✓</div>
-            <h3>Payment Confirmed!</h3>
+            <h3>Order Placed Successfully!</h3>
             <p>
-              Your order for <strong>{productName}</strong> {addMasterclass ? '& Masterclass' : ''} (${totalPrice}) has been processed successfully.
+              Your order for <strong>{productName}</strong> {addMasterclass ? '& Masterclass' : ''} (${totalPrice}) has been confirmed.
             </p>
+            
+            <div className={styles.modalAdminBadge}>
+              <span>🔔</span> Admin has been notified of your order
+            </div>
+
             <p className={styles.modalEmailNotice}>
-              Access credentials have been sent to <strong>{email || 'your email'}</strong>.
+              We sent a private link to <strong>{email || 'your email'}</strong> to set your password and access your dashboard.
             </p>
-            <Link href="/dashboard" className={styles.modalLinkBtn}>
-              Enter Member Portal &amp; Assets →
+
+            {/* Exactly as requested: Button 'Check your email for access' */}
+            <a 
+              href={email && email.toLowerCase().includes('@gmail.com') ? 'https://mail.google.com' : (email && (email.toLowerCase().includes('@outlook.com') || email.toLowerCase().includes('@hotmail.com')) ? 'https://outlook.live.com' : setPasswordUrl)} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.modalLinkBtn}
+            >
+              ✉️ Check your email for access
+            </a>
+
+            {/* Immediate Direct Link */}
+            <Link href={setPasswordUrl} className={styles.modalSecondaryBtn}>
+              Set Password &amp; Enter Dashboard Now →
             </Link>
+
             <button 
               type="button" 
               onClick={() => setIsSuccess(false)}

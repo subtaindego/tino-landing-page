@@ -3,6 +3,7 @@ import './globals.css';
 import { clientConfig } from '../config/client.config';
 import Script from 'next/script';
 import SafeHydrationGuard from '../components/SafeHydrationGuard';
+import Header from '../components/Header';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -64,6 +65,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         <SafeHydrationGuard />
+        <Header />
         {children}
       </body>
     </html>

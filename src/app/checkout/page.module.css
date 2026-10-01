@@ -816,14 +816,58 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 46px;
-  background: linear-gradient(90deg, #51f8aa 0%, #b8f8b8 100%);
+  height: 48px;
+  background: linear-gradient(90deg, #51f8aa 0%, #3de698 100%);
   color: #0b1611;
   font-weight: 800;
   border-radius: 8px;
   text-decoration: none;
   font-size: 0.95rem;
   margin-bottom: 0.75rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(81, 248, 170, 0.3);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.modalLinkBtn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.modalSecondaryBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(81, 248, 170, 0.4);
+  color: #51f8aa;
+  font-weight: 700;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalSecondaryBtn:hover {
+  background: rgba(81, 248, 170, 0.1);
+  border-color: #51f8aa;
+}
+
+.modalAdminBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
 }
 
 .modalCloseLink {
@@ -832,6 +876,7 @@
   color: #64748b;
   font-size: 0.82rem;
   cursor: pointer;
+  padding: 0.4rem;
 }
 
 .modalCloseLink:hover {
