@@ -1,0 +1,865 @@
+/* src/app/checkout/page.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap');
+
+.checkoutPage {
+  min-height: 100vh;
+  background-color: var(--bg-color, #0b0d19);
+  color: var(--text-primary, #edeeee);
+  padding: 3rem 1.5rem 6rem;
+  position: relative;
+  font-family: var(--font-inter, 'Inter', -apple-system, sans-serif);
+}
+
+.ambientGlow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(81, 248, 170, 0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+/* ============================================================ */
+/* LEFT COLUMN: Headings, Offer & Real Screenshots Stack        */
+/* ============================================================ */
+.leftCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d1e18;
+  border: 1px solid rgba(81, 248, 170, 0.35);
+  color: #51f8aa;
+  padding: 0.4rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+  width: fit-content;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: all 0.2s ease;
+}
+
+.stepBadge:hover {
+  border-color: #51f8aa;
+  color: #bdf8b8;
+  background: #112820;
+}
+
+.mainTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.65rem;
+}
+
+.gradientHighlight {
+  font-weight: 800;
+  background: linear-gradient(90deg, #51f8aa 0%, #b8f8b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline;
+}
+
+.subTitle {
+  font-size: 0.98rem;
+  color: #9ca3af;
+  margin: 0 0 2rem;
+  line-height: 1.5;
+}
+
+.accentBrand {
+  color: #51f8aa;
+  font-weight: 600;
+}
+
+.offerBlock {
+  margin-bottom: 1.75rem;
+}
+
+.offerTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.35rem;
+}
+
+.offerSubtitle {
+  font-size: 0.92rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* ================= REVIEWS SCREENSHOTS STACK ================= */
+.reviewsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+/* Screenshot 1: Light chat bubble */
+.chatScreenshotCard {
+  background: #f8fafc;
+  color: #1e293b;
+  border-radius: 12px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.chatBubbleContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.chatLine {
+  margin: 0;
+}
+
+.chatUserRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.chatAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chatCaption {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Screenshot 2: Sharon Singh Sidhu community review */
+.communityReviewCard {
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 12px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid #e2e8f0;
+}
+
+.communityHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.communityAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.communityMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.communityName {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.communityHandle {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.communityBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.communityGreeting {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.communityText {
+  font-size: 0.88rem;
+  color: #334155;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.communityFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: #64748b;
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ============================================================ */
+/* RIGHT COLUMN: Clean Single Checkout Card                     */
+/* ============================================================ */
+.rightCol {
+  position: sticky;
+  top: 2rem;
+}
+
+.checkoutBox {
+  background: #0e111f;
+  border: 1px solid rgba(81, 248, 170, 0.2);
+  border-radius: 14px;
+  padding: 1.75rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(81, 248, 170, 0.05);
+}
+
+.toolLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 1.15rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionHeading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.paymentHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quickTestLink {
+  font-size: 0.75rem;
+  color: #51f8aa;
+  background: rgba(81, 248, 170, 0.1);
+  border: 1px solid rgba(81, 248, 170, 0.3);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quickTestLink:hover {
+  background: rgba(81, 248, 170, 0.2);
+}
+
+/* Inputs */
+.inputStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.simpleInput {
+  width: 100%;
+  height: 42px;
+  background: #080a13;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  padding: 0 0.85rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.simpleInput:focus {
+  outline: none;
+  border-color: #51f8aa;
+  box-shadow: 0 0 0 2px rgba(81, 248, 170, 0.2);
+}
+
+.simpleInput::placeholder {
+  color: #64748b;
+}
+
+.simpleSelect {
+  width: 100%;
+  height: 42px;
+  background: #080a13;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  padding: 0 0.85rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+}
+
+.simpleSelect:focus {
+  outline: none;
+  border-color: #51f8aa;
+  box-shadow: 0 0 0 2px rgba(81, 248, 170, 0.2);
+}
+
+/* ================= ORDER BUMP (MASTERCLASS) ================= */
+.bumpBox {
+  border: 1.5px solid rgba(81, 248, 170, 0.45);
+  background: rgba(81, 248, 170, 0.03);
+  border-radius: 8px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bumpBoxActive {
+  background: rgba(81, 248, 170, 0.07);
+  border-color: #51f8aa;
+  box-shadow: 0 0 20px rgba(81, 248, 170, 0.15);
+}
+
+.bumpTopTag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #51f8aa;
+  letter-spacing: 0.04em;
+}
+
+.bumpHeadline {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #51f8aa;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.bumpLead {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.bumpParagraph {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.bumpBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.bumpWarning {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #51f8aa;
+  margin: 0.2rem 0 0;
+}
+
+.bumpPricingRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.bumpOldPrice {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-decoration: line-through;
+}
+
+.bumpNewPrice {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.bumpActionText {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.bumpGuarantee {
+  font-size: 0.76rem;
+  font-style: italic;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Bump Checkbox Row */
+.bumpCheckboxLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(81, 248, 170, 0.3);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  margin-top: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.bumpCheckboxLabel:hover {
+  background: rgba(81, 248, 170, 0.08);
+}
+
+.checkboxLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.bumpCheckbox {
+  width: 17px;
+  height: 17px;
+  accent-color: #51f8aa;
+  cursor: pointer;
+}
+
+.bumpCheckText {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bumpPriceTag {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #51f8aa;
+}
+
+/* ================= STRIPE PAYMENT BOX ================= */
+.stripeBox {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #080a13;
+}
+
+.stripeTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stripeTabActive {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.stripeLinkTag {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  color: #51f8aa;
+  font-weight: 600;
+}
+
+.arrowDown {
+  font-size: 0.7rem;
+}
+
+.stripeFieldsWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardNumberWrap {
+  display: flex;
+  align-items: center;
+  padding: 0 0.85rem;
+  height: 42px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cardFieldInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-family: inherit;
+}
+
+.cardFieldInput:focus {
+  outline: none;
+}
+
+.cardFieldInput::placeholder {
+  color: #64748b;
+}
+
+.cardLogos {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.cardLogo {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  color: #94a3b8;
+}
+
+.cardSubFields {
+  display: flex;
+  height: 52px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.subFieldCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.85rem;
+}
+
+.subFieldColBordered {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.85rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.miniLabel {
+  font-size: 0.65rem;
+  color: #64748b;
+  margin-bottom: 1px;
+}
+
+.miniInput {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-family: inherit;
+}
+
+.miniInput:focus {
+  outline: none;
+}
+
+.miniInput::placeholder {
+  color: #64748b;
+}
+
+.cvcWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardIconMini {
+  font-size: 0.8rem;
+  opacity: 0.4;
+}
+
+.cardCountryWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
+  height: 52px;
+}
+
+.cardCountrySelect {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+.cardCountrySelect option {
+  background: #080a13;
+  color: #ffffff;
+}
+
+.altPaymentRows {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.altRadioRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.altRadioRow:last-child {
+  border-bottom: none;
+}
+
+.altRadioRow:hover {
+  background: rgba(81, 248, 170, 0.04);
+}
+
+.altRadio {
+  accent-color: #51f8aa;
+  cursor: pointer;
+}
+
+.altPayText {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+/* Submit CTA Button */
+.submitBtn {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(90deg, #51f8aa 0%, #b8f8b8 100%);
+  color: #0b1611;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  margin-top: 0.2rem;
+  box-shadow: 0 4px 20px rgba(81, 248, 170, 0.28);
+}
+
+.submitBtn:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(81, 248, 170, 0.4);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Total Payment Box */
+.totalBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.totalHeader {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.15rem;
+}
+
+.totalLine {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.totalFinalLine {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #51f8aa;
+  padding-top: 0.35rem;
+  border-top: 1px dashed rgba(81, 248, 170, 0.25);
+}
+
+.totalLockNotice {
+  font-size: 0.72rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Success Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 14, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modalBox {
+  background: #0e111f;
+  border: 1px solid rgba(81, 248, 170, 0.4);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 25px rgba(81, 248, 170, 0.1);
+}
+
+.modalCheck {
+  width: 56px;
+  height: 56px;
+  background: rgba(81, 248, 170, 0.15);
+  border: 2px solid #51f8aa;
+  color: #51f8aa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin: 0 auto 1.25rem;
+}
+
+.modalBox h3 {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.modalBox p {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
+.modalEmailNotice {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 1.5rem !important;
+}
+
+.modalLinkBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  background: linear-gradient(90deg, #51f8aa 0%, #b8f8b8 100%);
+  color: #0b1611;
+  font-weight: 800;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.modalCloseLink {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.modalCloseLink:hover {
+  color: #94a3b8;
+}
+
+/* ================= RESPONSIVENESS ================= */
+@media (max-width: 960px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .rightCol {
+    position: static;
+  }
+}
+
+@media (max-width: 580px) {
+  .checkoutPage {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .darkSnippetsGrid {
+    grid-template-columns: 1fr;
+  }
+}
