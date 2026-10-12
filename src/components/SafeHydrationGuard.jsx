@@ -30,7 +30,8 @@ if (typeof window !== 'undefined') {
       (args[0].includes('fdprocessedid') ||
         args[0].includes('did not match') ||
         args[0].includes("didn't match the client properties") ||
-        args[0].includes('hydration-mismatch'))
+        args[0].includes('hydration-mismatch') ||
+        args[0].includes('Encountered a script tag'))
     ) {
       return;
     }

@@ -15,13 +15,40 @@ export async function POST(request) {
 
     const cleanEmail = email.trim().toLowerCase();
     const users = getUsers();
-    const userIndex = users.findIndex(u => u.email.toLowerCase() === cleanEmail);
+    let userIndex = users.findIndex(u => u.email.toLowerCase() === cleanEmail);
 
     if (userIndex === -1) {
+      const orders = getOrders();
+      const order = orders.find(o => o.email.toLowerCase() === cleanEmail);
+      if (!order) {
+        return NextResponse.json({
+          success: false,
+          error: 'No order or account found for this email address. Please make sure you are using the same email you entered at checkout.'
+        }, { status: 404 });
+      }
+      // Create user record from order
+      const newUser = {
+        id: 'usr_' + Date.now(),
+        email: cleanEmail,
+        name: order.name || 'Member',
+        password: password,
+        hasPasswordSet: true,
+        role: 'customer',
+        createdAt: new Date().toISOString(),
+        passwordUpdatedAt: new Date().toISOString()
+      };
+      users.unshift(newUser);
+      saveUsers(users);
+
       return NextResponse.json({
-        success: false,
-        error: 'No order or account found for this email address. Please make sure you are using the same email you entered at checkout.'
-      }, { status: 404 });
+        success: true,
+        message: 'Password set successfully! You are now authorized to enter your dashboard.',
+        user: {
+          email: newUser.email,
+          name: newUser.name,
+          role: newUser.role
+        }
+      });
     }
 
     if (users[userIndex].isBlocked) {

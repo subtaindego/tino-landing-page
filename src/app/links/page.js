@@ -10,18 +10,21 @@ export default function LinksPage() {
   
   // Data resolution matching inspiration layout
   const creatorName = linksPage?.name || profile?.name || theme?.clientName || "Tino";
-  const creatorLocation = linksPage?.location || "London, UK / Global";
-  const creatorRole = linksPage?.role || "Personal Brand & LinkedIn Strategist";
+  const creatorLocation = linksPage?.location || "London, UK";
+  const creatorRole = linksPage?.role || "Personal Brand Strategist";
   const creatorBio = linksPage?.bio || profile?.bio || "Building top 1% personal brands on LinkedIn. I help founders, consultants, and creators build visual authority that commands high fees.";
   const statsText = linksPage?.statsText || "Trusted by 140+ founders & creators";
   const avatarUrl = linksPage?.avatarUrl || profile?.avatarUrl || "/images/tino/tino.png";
   
-  const proofAvatars = linksPage?.proofAvatars || [
+  const proofAvatars = [
     "/images/dummy/avatar1.jpg",
     "/images/dummy/avatar2.jpg",
     "/images/dummy/avatar3.jpg",
     "/images/dummy/avatar4.jpg",
-    "/images/dummy/avatar5.jpg"
+    "/images/dummy/avatar5.jpg",
+    "/images/dummy/avatar6.jpg",
+    "/images/dummy/avatar7.jpg",
+    "/images/dummy/avatar8.jpg"
   ];
 
   const leadMagnet = linksPage?.leadMagnet || {
@@ -209,10 +212,10 @@ export default function LinksPage() {
                   <span className={styles.roleItem}>🎨 {creatorRole}</span>
                 </div>
 
-                {/* Social Proof Row (5 overlapping avatars + stars + counter) */}
+                {/* Social Proof Row (8 overlapping avatars in circles + stars + counter) */}
                 <div className={styles.proofRow}>
                   <div className={styles.avatarStack}>
-                    {proofAvatars.slice(0, 5).map((imgSrc, i) => (
+                    {proofAvatars.map((imgSrc, i) => (
                       <img 
                         key={i} 
                         src={imgSrc} 
@@ -223,8 +226,8 @@ export default function LinksPage() {
                     ))}
                   </div>
                   <div className={styles.proofInfo}>
-                    <div className={styles.stars}>★★★★★</div>
-                    <div className={styles.proofText}>{statsText}</div>
+                    <span className={styles.stars}>★★★★★</span>
+                    <span className={styles.proofText}>140+ founders &amp; creators</span>
                   </div>
                 </div>
 

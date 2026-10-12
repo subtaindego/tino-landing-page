@@ -1,11 +1,12 @@
 [
   {
-    "id": "usr_test_001",
-    "email": "test@tino.com",
-    "name": "Tino Test",
-    "password": "tino2026",
+    "id": "usr_1790975917057_0i1ui",
+    "email": "subtaindego@gmail.com",
+    "name": "subtain",
+    "password": "mypassword123",
     "hasPasswordSet": true,
     "role": "customer",
-    "createdAt": "2026-10-01T00:00:00.000Z"
+    "createdAt": "2026-10-02T21:18:37.057Z",
+    "passwordUpdatedAt": "2026-10-02T21:24:37.720Z"
   }
 ]

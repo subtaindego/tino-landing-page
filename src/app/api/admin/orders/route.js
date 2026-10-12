@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getOrders, saveOrders, getUsers, saveUsers } from '../../../../lib/db';
+import { sendRevokeAccessEmail } from '../../../../lib/mailer';
 
 export async function GET(request) {
   try {
@@ -99,12 +100,35 @@ export async function DELETE(request) {
     }
 
     const cleanEmail = emailToDelete.trim().toLowerCase();
-    const users = getUsers().filter(u => u.email.toLowerCase() !== cleanEmail);
-    saveUsers(users);
+
+    // 1. Get user info before deleting
+    const allUsers = getUsers();
+    const targetUser = allUsers.find(u => u.email.toLowerCase() === cleanEmail);
+    const userName = targetUser?.name || 'Member';
+
+    // 2. Remove user from users.json
+    const updatedUsers = allUsers.filter(u => u.email.toLowerCase() !== cleanEmail);
+    saveUsers(updatedUsers);
+
+    // 3. Remove all orders associated with this email from orders.json
+    const allOrders = getOrders();
+    const updatedOrders = allOrders.filter(o => o.email.toLowerCase() !== cleanEmail);
+    saveOrders(updatedOrders);
+
+    // 4. Send revoke access email to the user
+    let emailResult = null;
+    try {
+      await sendRevokeAccessEmail({ userName, userEmail: cleanEmail });
+      emailResult = 'sent';
+      console.log('📧 Revoke access email sent to:', cleanEmail);
+    } catch (emailErr) {
+      emailResult = 'failed: ' + emailErr.message;
+      console.warn('⚠️ Revoke email failed:', emailErr.message);
+    }
 
     return NextResponse.json({
       success: true,
-      message: `User ${cleanEmail} access removed`
+      message: `Customer ${cleanEmail} completely removed (User account & Orders deleted). Notification: ${emailResult}`
     });
   } catch (error) {
     console.error('Admin delete error:', error);

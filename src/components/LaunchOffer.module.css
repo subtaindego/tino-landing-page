@@ -1,0 +1,194 @@
+/* src/components/LaunchOffer.module.css */
+
+.sectionWrapper {
+  padding: 5rem 0;
+  background-color: var(--bg-color);
+}
+
+.outerCard {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #090c17;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 4.5rem 3rem 4rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d1e18;
+  border: 1px solid rgba(81, 248, 170, 0.35);
+  color: #51f8aa;
+  padding: 0.45rem 1.4rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+.heading {
+  font-size: clamp(1.85rem, 3.6vw, 3.1rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  max-width: 920px;
+  margin: 0 auto 1.25rem;
+}
+
+.headingLine {
+  display: block;
+}
+
+.gradientHighlight {
+  background: linear-gradient(90deg, #51f8aa 0%, #b8f8b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: block;
+  font-weight: 800;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  max-width: 650px;
+  margin: 0 auto 2.5rem;
+  text-wrap: balance;
+}
+
+/* Inner Pricing Box */
+.innerCard {
+  background: #0b0e1b;
+  border: 1px solid rgba(81, 248, 170, 0.18);
+  border-radius: 20px;
+  padding: 2.75rem 3rem 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(81, 248, 170, 0.05);
+}
+
+.innerLabel {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.priceAmount {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #51f8aa;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.priceCurrency {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #51f8aa;
+}
+
+.paymentType {
+  font-size: 0.92rem;
+  color: #9ca3af;
+  margin: 0 0 1.75rem 0;
+}
+
+.claimBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #59f19f;
+  color: #081a12;
+  padding: 0.95rem 2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(81, 248, 170, 0.35);
+  cursor: pointer;
+}
+
+.claimBtn:hover {
+  background: #6effaf;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(81, 248, 170, 0.55);
+}
+
+/* Trust Row under inner box */
+.trustRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.trustIcon {
+  color: #51f8aa;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .outerCard {
+    padding: 3rem 1.5rem;
+    border-radius: 18px;
+  }
+
+  .innerCard {
+    padding: 2rem 1.5rem;
+  }
+
+
+  .heading {
+    font-size: 2.1rem;
+  }
+
+  .priceAmount {
+    font-size: 2.85rem;
+  }
+
+  .trustRow {
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+}

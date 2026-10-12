@@ -111,7 +111,7 @@ export default function CheckoutPage() {
 
             {/* Main Heading from Main Page */}
             <h1 className={styles.mainTitle}>
-              Build the foundation to monetize your personal brand <span className={styles.gradientHighlight}>in just 7 days.</span>
+              Build the strategy that makes your personal brand pay off <span className={styles.gradientHighlight}>in just 30 days.</span>
             </h1>
 
             {/* Subheading with Main Page Pricing & Guarantee */}
@@ -463,41 +463,15 @@ export default function CheckoutPage() {
         <div className={styles.modalOverlay}>
           <div className={styles.modalBox}>
             <div className={styles.modalCheck}>✓</div>
-            <h3>Order Placed Successfully!</h3>
-            <p>
-              Your order for <strong>{productName}</strong> {addMasterclass ? '& Masterclass' : ''} (${totalPrice}) has been confirmed.
+            <p className={styles.modalConfirmLine}>
+              Your order for <strong>{productName}</strong> (${totalPrice}) has been confirmed.
             </p>
-            
-            <div className={styles.modalAdminBadge}>
-              <span>🔔</span> Admin has been notified of your order
-            </div>
-
-            <p className={styles.modalEmailNotice}>
-              We sent a private link to <strong>{email || 'your email'}</strong> to set your password and access your dashboard.
+            <p className={styles.modalSubLine}>
+              You have immediate access to your member dashboard.
             </p>
-
-            {/* Exactly as requested: Button 'Check your email for access' */}
-            <a 
-              href={email && email.toLowerCase().includes('@gmail.com') ? 'https://mail.google.com' : (email && (email.toLowerCase().includes('@outlook.com') || email.toLowerCase().includes('@hotmail.com')) ? 'https://outlook.live.com' : setPasswordUrl)} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={styles.modalLinkBtn}
-            >
-              ✉️ Check your email for access
-            </a>
-
-            {/* Immediate Direct Link */}
-            <Link href={setPasswordUrl} className={styles.modalSecondaryBtn}>
-              Set Password &amp; Enter Dashboard Now →
+            <Link href="/dashboard" className={styles.modalLinkBtn}>
+              Go to Member Dashboard →
             </Link>
-
-            <button 
-              type="button" 
-              onClick={() => setIsSuccess(false)}
-              className={styles.modalCloseLink}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

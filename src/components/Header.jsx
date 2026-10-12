@@ -24,11 +24,11 @@ export default function Header() {
   }, [pathname]);
 
   const navItems = [
-    { label: "Authority Kit", href: "/authority-kit", badge: null },
+    { label: "Links", href: "/links", badge: null },
     { label: "Free Training", href: "/swipemytraining", badge: "Free" },
+    { label: "Brand Blueprint", href: "/", badge: null },
     { label: "Checkout", href: "/checkout", badge: "$47" },
     { label: "Dashboard", href: "/dashboard", badge: null },
-    { label: "Links", href: "/links", badge: null },
   ];
 
   return (

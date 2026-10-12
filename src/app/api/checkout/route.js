@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getOrders, saveOrders, getUsers, saveUsers } from '../../../lib/db';
 import { clientConfig } from '../../../config/client.config';
+import { sendCustomerOrderEmail, sendAdminOrderEmail } from '../../../lib/mailer';
 
 export async function POST(request) {
   try {
@@ -59,50 +60,55 @@ export async function POST(request) {
 
     // 3. Construct Set Password Link
     const host = request.headers.get('host') || 'localhost:3000';
-    const protocol = request.headers.get('x-forwarded-proto') || 'http';
-    const baseUrl = `${protocol}://${host}`;
+    const protocol = request.headers.get('x-forwarded-proto') || (host.includes('localhost') ? 'http' : 'https');
+    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('3001'))
+      ? process.env.NEXT_PUBLIC_SITE_URL
+      : `${protocol}://${host}`;
     const setPasswordLink = `${baseUrl}/dashboard?action=set_password&email=${encodeURIComponent(cleanEmail)}`;
 
-    // 4. Send Emails via PHP Mailer endpoint (if configured) or local mock
-    const phpMailerUrl = process.env.PHP_MAILER_URL || process.env.NEXT_PUBLIC_PHP_MAILER_URL;
-    let phpMailResult = null;
+    // 4. Send Emails via Nodemailer
+    const emailPayload = {
+      userName: cleanName,
+      userEmail: cleanEmail,
+      productName,
+      totalPrice,
+      hasMasterclass: !!addMasterclass,
+      country: country || 'US',
+      setPasswordLink,
+    };
 
-    if (phpMailerUrl) {
-      try {
-        const phpRes = await fetch(phpMailerUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userEmail: cleanEmail,
-            userName: cleanName,
-            adminEmail: clientConfig.profile.email,
-            productName,
-            totalPrice,
-            hasMasterclass: !!addMasterclass,
-            country: country || 'US',
-            setPasswordLink
-          })
-        });
-        phpMailResult = await phpRes.json();
-      } catch (phpErr) {
-        console.warn('PHP Mailer call error:', phpErr.message);
-      }
+    let emailResults = { customer: null, admin: null };
+
+    try {
+      await sendCustomerOrderEmail(emailPayload);
+      emailResults.customer = 'sent';
+      console.log('📧 Customer email sent to:', cleanEmail);
+    } catch (emailErr) {
+      emailResults.customer = 'failed: ' + emailErr.message;
+      console.warn('⚠️ Customer email failed:', emailErr.message);
+    }
+
+    try {
+      await sendAdminOrderEmail(emailPayload);
+      emailResults.admin = 'sent';
+      console.log('📧 Admin email sent to:', process.env.ADMIN_EMAIL || 'sibtey02@gmail.com');
+    } catch (emailErr) {
+      emailResults.admin = 'failed: ' + emailErr.message;
+      console.warn('⚠️ Admin email failed:', emailErr.message);
     }
 
     console.log('--------------------------------------------------');
-    console.log('📧 [EMAIL DISPATCHED TO CUSTOMER]:', cleanEmail);
-    console.log('   Subject: Order Confirmed - Set your password for LinkedIn Authority Kit™');
-    console.log('   Access & Set Password Link:', setPasswordLink);
-    console.log('📧 [EMAIL DISPATCHED TO ADMIN]:', clientConfig.profile.email);
-    console.log(`   Subject: New Order: $${totalPrice} from ${cleanName} (${cleanEmail})`);
+    console.log('📧 [ORDER PROCESSED]:', cleanEmail);
+    console.log('   Set Password Link:', setPasswordLink);
+    console.log('   Email Results:', emailResults);
     console.log('--------------------------------------------------');
 
     return NextResponse.json({
       success: true,
       order: newOrder,
       setPasswordLink,
-      phpMailResult,
-      message: 'Order created, customer added to database, and email notifications triggered'
+      emailResults,
+      message: 'Order created, user saved, and email notifications sent'
     });
   } catch (error) {
     console.error('Checkout API error:', error);

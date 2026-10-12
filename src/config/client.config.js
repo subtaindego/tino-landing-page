@@ -7,7 +7,7 @@ export const clientConfig = {
     clientName: "TINO",
     brandName: "Authority Kit",
     tagline: "Build a High-Converting Personal Brand & LinkedIn Authority System",
-    location: "London, UK / Global",
+    location: "London, UK",
     
     // Theme Colors based on user visual style
     colors: {
@@ -39,7 +39,7 @@ export const clientConfig = {
     bio: "Personal brand builder & visual identity designer. I help founders, consultants, and creators build an authoritative, client-converting personal brand on LinkedIn that commands trust and high fees.",
     statsText: "Trusted by 140+ founders, consultants & creators worldwide",
     ratingScore: "4.9 / 5.0",
-    email: "tino@authoritykit.com",
+    email: "sibtey02@gmail.com",
     whatsapp: "https://wa.me/447700900123",
     linkedin: "https://www.linkedin.com/in/tino-branding",
     instagram: "https://instagram.com/authoritykit",
@@ -48,11 +48,11 @@ export const clientConfig = {
 
   // 💰 Product Pricing & Launch Strategy
   product: {
-    name: "LinkedIn Authority Kit™",
+    name: "The LinkedIn Brand Blueprint",
     shortBadge: "Step 01 • Instant Access System",
-    heroHeadline: "Build the foundation to monetize your personal brand in just 7 days with",
-    heroSubheadline: "The complete plug-and-play visual identity and personal brand training system to transform your LinkedIn profile into a client-attracting landing page without hiring an expensive designer.",
-    originalValue: 1125,
+    heroHeadline: "Build the strategy that makes your personal brand pay off in just 30 days.",
+    heroSubheadline: "Get Tino's step by step LinkedIn Brand Blueprint and go from \"I don't know where to start\" to a 3 month strategy and a full month of posts mapped out.",
+    originalValue: 97,
     regularPrice: 97,
     launchPrice: 47,
     isLaunchActive: true,
@@ -60,19 +60,21 @@ export const clientConfig = {
 
     // Value Stack Deliverables
     features: [
-      "10+ High-Authority banner templates engineered to hook visitors in 3 seconds",
-      "10+ Featured section funnel designs to turn profile clicks into booked calls and sales",
-      "15+ High-engagement carousel & tweet post templates to explode reach and authority",
-      "Personal Brand Style Blueprint (PDF) covering typography rules, colors, and layout hierarchy",
-      "Bonus: 3-minute fast-track video guide showing how to customize every template like a top-tier designer in Canva"
+      "9 Step-by-Step Modules from platform basics to monetization",
+      "10 Practical worksheets to build your personalized plan",
+      "AI Prompts for post ideas and scroll-stopping hooks",
+      "30-Day posting calendar with 20 plug-and-play post frameworks",
+      "3-Month strategy template with clear milestones",
+      "Daily engagement routine and networking checklist"
     ],
 
     valueBreakdown: [
-      { title: "10+ High-Authority Banner Templates (Canva Ready)", value: "$600" },
-      { title: "10+ Featured Section Converting Funnels", value: "$100" },
-      { title: "15+ Viral Engagement Carousel & Post Templates", value: "$300" },
-      { title: "Personal Brand Sizing & Visual Style Guide (PDF)", value: "$75" },
-      { title: "3-Minute Video Implementation Masterclass", value: "$50" }
+      { title: "9 Step-by-Step Modules", value: "Included" },
+      { title: "10 Worksheets", value: "Included" },
+      { title: "AI Prompts for Hooks and Post Ideas", value: "Included" },
+      { title: "30 Day Posting Calendar (20 Posts)", value: "Included" },
+      { title: "3 Month Strategy Template", value: "Included" },
+      { title: "Daily Engagement Routine and Checklist", value: "Included" }
     ]
   },
 
@@ -118,8 +120,8 @@ export const clientConfig = {
   // 🔗 Links Page Hub
   linksPage: {
     name: "Tino",
-    location: "London, UK / Global",
-    role: "Personal Brand & LinkedIn Strategist",
+    location: "London, UK",
+    role: "Personal Brand Strategist",
     avatarUrl: "/images/tino/tino.png",
     bio: "Building top 1% personal brands on LinkedIn. I help founders, consultants, and creators build visual authority that commands high fees.",
     statsText: "Trusted by 140+ founders & creators",
@@ -153,12 +155,12 @@ export const clientConfig = {
         url: "/swipemytraining"
       },
       {
-        id: "authority-kit",
+        id: "brand-blueprint",
         icon: "box",
         badge: "🚀 Launch Special $47",
-        title: "LinkedIn Authority Kit™",
-        description: "Plug-and-play Canva templates and visual framework to instantly look like a top 1% authority.",
-        ctaText: "Get Authority Kit ($47) →",
+        title: "The LinkedIn Brand Blueprint",
+        description: "Step-by-step workbook, 3-month strategy, and 30-day posting plan to monetize your personal brand.",
+        ctaText: "Get Brand Blueprint ($47) →",
         url: "/checkout"
       },
       {
@@ -183,8 +185,8 @@ export const clientConfig = {
     badgeText: "Verified Creator",
     linksList: [
       {
-        title: "⚡ Get LinkedIn Authority Kit™",
-        subtitle: "Plug-and-play visual templates (Launch Special $47)",
+        title: "⚡ Get The LinkedIn Brand Blueprint",
+        subtitle: "Workbook, 3-month strategy & 30-day plan (Launch Special $47)",
         url: "/checkout",
         highlight: true,
         tag: "Save $50"

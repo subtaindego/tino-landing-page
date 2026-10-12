@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { clientConfig } from '../../config/client.config';
 import FadeIn from '../../components/FadeIn';
-import RatingBadge from '../../components/RatingBadge';
 import styles from './page.module.css';
 
 export default function SwipeMyTrainingPage() {
@@ -111,10 +110,6 @@ export default function SwipeMyTrainingPage() {
                   </p>
                 </form>
               )}
-            </div>
-
-            <div className={styles.badgeFooter}>
-              <RatingBadge />
             </div>
           </div>
         </FadeIn>
